@@ -8,7 +8,9 @@ export async function fetchCatImage(): Promise<string> {
     },
   });
 
-  if (!res.ok) throw new Error('Ошибка при получении изображения');
+  if (!res.ok) {
+    throw new Error('Ошибка при получении изображения');
+  }
 
   const data = await res.json();
   return data[0].url;

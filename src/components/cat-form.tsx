@@ -2,9 +2,11 @@ import { useCatImage } from '@/hooks/use-cat-image';
 import { Wrapper, Form, Label, Button, ImageBox } from './cat-form.styled';
 import { useEffect, useState } from 'react';
 
+const TIME_INTERVAL = 5000;
+
 export const CatForm = () => {
   const { imageUrl, loading, error, getCatImage } = useCatImage();
-  
+
   const [isEnabled, setIsEnabled] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(false);
 
@@ -17,24 +19,24 @@ export const CatForm = () => {
   };
 
   useEffect(() => {
-    if (!isEnabled || !autoRefresh) return;
+    if (!isEnabled || !autoRefresh) { return };
 
     const interval = setInterval(() => {
       getCatImage();
-    }, 5000);
+    }, TIME_INTERVAL);
 
     return () => clearInterval(interval);
-  }, [isEnabled, autoRefresh]);
+  }, [isEnabled, autoRefresh, getCatImage]);
 
   return (
-   <Wrapper>
-      <Form onSubmit={handleSubmit}>
+    <Wrapper>
+      <Form name="image-cat" onSubmit={handleSubmit}>
         <Label>
           <input type="checkbox" onChange={handleEnabledChange} checked={isEnabled} />
           Enabled
         </Label>
         <Label>
-          <input type="checkbox" onChange={handleAutoRefreshChange} checked={autoRefresh} disabled={!isEnabled}/>
+          <input type="checkbox" onChange={handleAutoRefreshChange} checked={autoRefresh} disabled={!isEnabled} />
           Auto-refresh every 5 seconds
         </Label>
         <Button type="submit" disabled={loading || !isEnabled}>
