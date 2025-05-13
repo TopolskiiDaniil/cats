@@ -13,7 +13,7 @@ export function useCatImage() {
       setImageUrl(url);
       setError(null);
     } catch {
-      setError('Не удалось загрузить изображение');
+      setError('Failed to load image');
     } finally {
       setLoading(false);
     }
